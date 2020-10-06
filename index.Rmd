@@ -1,0 +1,64 @@
+---
+title: "Leaflet and Markdown"
+author: "Vedant Naik"
+date: "06/10/2020"
+output:
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
+
+---
+This respository contains the example of usage of leaflet and markdown in R. The following map shows the spread of covid 19 in India. It shows the confirmed cases state-wise. You can click on the markers and see which state it is. 
+```{r,echo=FALSE}
+states <- read.csv(textConnection("
+State,Lat,Long,cases
+Andhra Pradesh,15.9129,79.7400,723512
+Andaman and Nicobar Islands,11.7401,92.6586,3899
+Arunachal Pradesh,28.2180,94.7278,10783
+Assam,26.2006,92.9376,187718
+Bihar,25.0961,85.3131,188858
+Chandigarh,30.7333,76.7794,12578
+Chhattisgarh,21.2787,81.8661,126005
+Dadra and Nagar Haveli and Daman and Diu,20.4283,72.8397,3090
+Delhi,28.7041,77.1025,292560
+Goa,15.2993,74.1240,35719
+Gujarat,22.2587,71.1924,144026
+Haryana,29.0588,76.0856,134909
+Himachal Pradesh,31.1048,77.1734,16033
+Jammu and Kashmir,33.7782,76.5762,79738
+Jharkhand,23.6102,85.2799,88026
+Karnataka,15.3173,75.7139,647712
+Kerala,10.8505,76.2711,234929
+Ladakh,34.152588,77.577049,4641
+Madhya Pradesh,22.9734,78.6569,137098
+Manipur,24.6637,93.9063,12105
+Meghalaya,25.4670,91.3662,6765
+Mizoram,23.1645,92.9376,2128
+Nagaland,26.1584,94.5624,6594
+Odisha,20.9517,85.0985,238003
+Puducherry,11.9416,79.8083,29277
+Punjab,31.1471,75.3412,119186
+Rajasthan,27.0238,74.2179,146195
+Sikkim,27.5330,88.5122,3110
+Tamil Nadu,11.1271,78.6569,625391
+Telangana,18.1124,79.0193,202594
+Tripura,23.9408,91.9882,27305
+Uttar Pradesh,26.8467,80.9462,417437
+Uttarakhand,30.0668,79.0193,51991
+West Bengal,22.9868,87.8550,273679
+Maharashtra,19.7515,75.7139,1453653
+"))
+```
+```{r,echo=FALSE}
+library(leaflet)
+map<-leaflet(states) %>% addProviderTiles(providers$CartoDB.Positron) %>%addCircles(lng = ~Long, lat = ~Lat,
+    radius = ~cases*0.33 , popup = ~State, color = 'red',stroke = FALSE,
+  )
+map
+```
+
+This is the dataframe used.
+```{r,echo=FALSE}
+print(states)
+```
+
